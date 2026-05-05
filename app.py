@@ -14,7 +14,7 @@ def login():
         if username == USERNAME and password == PASSWORD:
             return redirect(url_for('dashboard'))
         else:
-            return "Invalid credentials", 401
+            return "Invalid credentials ", 401
     return render_template('login.html')
 
 @app.route('/dashboard')
