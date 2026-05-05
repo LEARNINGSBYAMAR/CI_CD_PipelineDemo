@@ -20,7 +20,7 @@ def test_valid_login(client):
         'password': 'password'
     }, follow_redirects=True)
     assert response.status_code == 200
-    assert b'Welcome to Dashboard!' in response.data
+    assert b'Welcome to Dashboard! hooo' in response.data
 
 
 def test_invalid_login(client):
