@@ -1,29 +1,25 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-def validate_password(password):
-    if len(password) < 6:
-        return "Password must be at least 6 characters"
-    if not any(char.isdigit() for char in password):
-        return "Password must contain a number"
-    return "Valid"
+# Dummy credentials
+USERNAME = "admin"
+PASSWORD = "password"
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
-    message = ""
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-
-        validation = validate_password(password)
-
-        if validation == "Valid" and username == "admin":
-            message = "Login Successful"
+        if username == USERNAME and password == PASSWORD:
+            return redirect(url_for('dashboard'))
         else:
-            message = validation
+            return "Invalid credentials", 401
+    return render_template('login.html')
 
-    return render_template('login.html', message=message)
+@app.route('/dashboard')
+def dashboard():
+    return "Welcome to Dashboard!"
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)
